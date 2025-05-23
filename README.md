@@ -199,4 +199,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 - [Model Context Protocol](https://modelcontextprotocol.io)
 - [Cursor IDE](https://cursor.com)
+- [Cursor MCP Server](https://docs.cursor.com/context/model-context-protocol)
 - [GitHub API](https://docs.github.com/en/rest)
+- [GitHubauthlib](https://pypi.org/project/githubauthlib/)
