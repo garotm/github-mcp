@@ -1,4 +1,5 @@
 """Tests for the GitHub MCP server."""
+
 import json
 import os
 from unittest.mock import MagicMock, patch
@@ -10,6 +11,7 @@ from github_mcp.server import app, register_tool
 
 # Test client
 client = TestClient(app)
+
 
 @pytest.fixture
 def mock_github():
@@ -27,12 +29,13 @@ def mock_github():
         mock_repo.default_branch = "main"
         mock_repo.language = "Python"
         mock_repo.get_topics.return_value = ["test", "python"]
-        
+
         mock_user.get_repos.return_value = [mock_repo]
         mock.return_value.get_user.return_value = mock_user
         mock.return_value.get_repo.return_value = mock_repo
-        
+
         yield mock
+
 
 def test_root_endpoint():
     """Test the root endpoint returns server information."""
@@ -42,6 +45,7 @@ def test_root_endpoint():
     assert data["name"] == "github-mcp"
     assert data["version"] == "0.1.0"
     assert "tools" in data
+
 
 def test_list_repositories(mock_github):
     """Test the list_repositories tool."""
@@ -57,11 +61,12 @@ def test_list_repositories(mock_github):
     assert "content" in data
     assert len(data["content"]) == 1
     assert data["content"][0]["type"] == "text"
-    
+
     repos = json.loads(data["content"][0]["text"])
     assert len(repos) == 1
     assert repos[0]["name"] == "test-repo"
     assert repos[0]["full_name"] == "test-owner/test-repo"
+
 
 def test_get_repository(mock_github):
     """Test the get_repository tool."""
@@ -80,12 +85,13 @@ def test_get_repository(mock_github):
     assert "content" in data
     assert len(data["content"]) == 1
     assert data["content"][0]["type"] == "text"
-    
+
     repo = json.loads(data["content"][0]["text"])
     assert repo["name"] == "test-repo"
     assert repo["full_name"] == "test-owner/test-repo"
     assert repo["language"] == "Python"
     assert repo["topics"] == ["test", "python"]
+
 
 def test_invalid_tool():
     """Test calling an invalid tool."""
@@ -99,12 +105,13 @@ def test_invalid_tool():
     assert response.status_code == 404
     assert "not found" in response.json()["detail"].lower()
 
+
 def test_sse_endpoint():
     """Test the SSE endpoint."""
     response = client.get("/sse")
     assert response.status_code == 200
     assert response.headers["content-type"] == "text/event-stream"
-    
+
     # Read the first event
     event = next(response.iter_lines())
-    assert b"event: ping" in event 
+    assert b"event: ping" in event

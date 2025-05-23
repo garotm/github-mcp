@@ -18,6 +18,9 @@ if [ $LINT_EXIT_CODE -ne 0 ]; then
   exit $LINT_EXIT_CODE
 fi
 
+# Set PYTHONPATH to the project root
+export PYTHONPATH=$(pwd)
+
 # Run tests
 pytest tests
 TEST_EXIT_CODE=$?

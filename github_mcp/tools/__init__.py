@@ -1,7 +1,9 @@
 """GitHub MCP tools package."""
-from typing import Dict, Any
 
-from github_mcp.server import register_tool
+from typing import Any, Dict
+
+from github_mcp.registry import register_tool
+
 
 def register_repository_tools() -> None:
     """Register repository-related tools."""
@@ -37,6 +39,7 @@ def register_repository_tools() -> None:
             "required": ["owner", "repo"],
         },
     )
+
 
 def register_issue_tools() -> None:
     """Register issue-related tools."""
@@ -88,6 +91,7 @@ def register_issue_tools() -> None:
         },
     )
 
+
 def register_pull_request_tools() -> None:
     """Register pull request-related tools."""
     register_tool(
@@ -124,12 +128,21 @@ def register_pull_request_tools() -> None:
                 "title": {"type": "string", "description": "Pull request title"},
                 "body": {"type": "string", "description": "Pull request description"},
                 "head": {"type": "string", "description": "Source branch"},
-                "base": {"type": "string", "description": "Target branch", "default": "main"},
-                "draft": {"type": "boolean", "description": "Create as draft", "default": False},
+                "base": {
+                    "type": "string",
+                    "description": "Target branch",
+                    "default": "main",
+                },
+                "draft": {
+                    "type": "boolean",
+                    "description": "Create as draft",
+                    "default": False,
+                },
             },
             "required": ["owner", "repo", "title", "head"],
         },
     )
+
 
 def register_content_tools() -> None:
     """Register content-related tools."""
@@ -156,16 +169,21 @@ def register_content_tools() -> None:
             "properties": {
                 "owner": {"type": "string", "description": "Repository owner"},
                 "repo": {"type": "string", "description": "Repository name"},
-                "path": {"type": "string", "description": "Directory path", "default": ""},
+                "path": {
+                    "type": "string",
+                    "description": "Directory path",
+                    "default": "",
+                },
                 "ref": {"type": "string", "description": "Branch/tag/commit reference"},
             },
             "required": ["owner", "repo"],
         },
     )
 
+
 def register_all_tools() -> None:
     """Register all available tools."""
     register_repository_tools()
     register_issue_tools()
     register_pull_request_tools()
-    register_content_tools() 
+    register_content_tools()

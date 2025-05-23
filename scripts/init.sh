@@ -1,7 +1,13 @@
 #!/bin/bash
 set -e
 
-# Create virtual environment if it doesn't exist
+# Remove existing virtual environment if it exists
+if [ -d ".venv" ]; then
+  echo "Removing existing .venv directory to ensure a fresh environment..."
+  rm -rf .venv
+fi
+
+# Create fresh virtual environment following removal above
 if [ ! -d ".venv" ]; then
   python3 -m venv .venv
 fi
