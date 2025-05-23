@@ -1,5 +1,7 @@
 # GitHub MCP Server
 
+![GitHub MCP Server](img/GitHub_MCP_Server.png)
+
 A Model Context Protocol (MCP) server that provides GitHub integration tools for AI assistants. This server implements a set of tools that allow AI models to interact with GitHub repositories, issues, pull requests, and content.
 
 ## Features
